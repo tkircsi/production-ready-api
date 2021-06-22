@@ -3,10 +3,12 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
 
+	"github.com/tkircsi/production-ready-api/internal/database"
 	transportHTTP "github.com/tkircsi/production-ready-api/internal/transport/http"
 )
 
@@ -15,6 +17,11 @@ type App struct{}
 func main() {
 	fmt.Println("App is started")
 	app := App{}
+
+	_, err := database.NewDatabse()
+	if err != nil {
+		log.Fatal("DB error")
+	}
 	app.Run()
 }
 
